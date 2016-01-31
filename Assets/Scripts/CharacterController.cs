@@ -9,12 +9,15 @@ public class CharacterController : MonoBehaviour {
     List<GameObject> items;
     public float itemRotation = 0.0f;
     float itemRotationSpeed = 90.0f;
-    bool isWalking = false;
+    public bool isWalking = false;
+    public bool isKicking = false;
+    public Animator animator;
 
 	// Use this for initialization
 	void Start () {
         rbody = GetComponent<Rigidbody2D>();
         items = new List<GameObject>();
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +27,7 @@ public class CharacterController : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         isWalking = (horizontal > 0.0f || vertical > 0.0f) ? true : false;
+        animator.SetBool("isWalking", isWalking);
         float translation = speed * Time.deltaTime;
 
         // get mouse position

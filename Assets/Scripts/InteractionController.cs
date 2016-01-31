@@ -7,6 +7,7 @@ public class InteractionController : MonoBehaviour {
     CircleCollider2D collider;
     public GameObject selector;
     SpriteRenderer selectorRenderer;
+    CharacterController charController;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,7 @@ public class InteractionController : MonoBehaviour {
         collider = GetComponent<CircleCollider2D>();
         selectorRenderer = selector.GetComponent<SpriteRenderer>();
         selectorRenderer.enabled = false;
+        charController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
     }
 	
 	// Update is called once per frame
@@ -38,10 +40,17 @@ public class InteractionController : MonoBehaviour {
                 float selectorRad = hit.collider.bounds.size.x * 3.0f;
                 selector.transform.localScale = new Vector3(selectorRad, selectorRad, selectorRad);
 
-                if (Input.GetKey(KeyCode.Space))
+                if (!charController.isKicking && Input.GetKey(KeyCode.Space))
                 {
+                    charController.isKicking = true;
+                    //charController.isWalking = false;
                     interactionComp.Interact();
                 }
+                else
+                {
+                    charController.isKicking = false;
+                }
+                charController.animator.SetBool("isKicking", charController.isKicking);
             }
             else
             {
