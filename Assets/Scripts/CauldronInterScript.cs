@@ -30,12 +30,20 @@ public class CauldronInterScript : BaseInteraction
         itemCodes["flux_drive"]                 = 1 << 16;
         itemCodes["haunted_toy_car"]            = 1 << 17;
         itemCodes["screaming_cyber_witches"]    = 1 << 18;
+
+        source = GetComponent<AudioSource>();
     }
     //0, 4, 7, 9
 
+    public AudioClip ritualSound;
+    private AudioSource source;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
 
     public override void Interact()
     {
+        float vol = Random.Range(volLowRange, volHighRange);
+        source.PlayOneShot(ritualSound, vol);
         uint code = 0;
         for( int i = 0; i < charController.items.Count; ++i)
         {
