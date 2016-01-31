@@ -14,11 +14,13 @@ public class CreepScript : MonoBehaviour {
     float currLeapDist = 0.0f;
     float leapCooldown = 0.5f, currLeapDt = 0.0f;
     float walkSpeed = 0.25f;
+    Animator animator;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindWithTag("Player");
         rbody = player.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -56,6 +58,11 @@ public class CreepScript : MonoBehaviour {
                     Debug.Log(toPlayer);
                 }
             }
+            else
+            {
+                walking = false;
+                leaping = false;
+            }
         }
         else
         {
@@ -69,5 +76,7 @@ public class CreepScript : MonoBehaviour {
                 currLeapDt = leapCooldown;
             }
         }
+        animator.SetBool("walking", walking);
+        animator.SetBool("leaping", leaping);
     }
 }
