@@ -4,8 +4,8 @@ using System.Collections;
 public class ItemInterScript : BaseInteraction
 {
     public string itemName;
-    bool attached = false;
-    int attachPos;
+    public bool attached = false;
+    public int attachPos;
     public float itemOffset = 0.11f;
 
     override public void Start()

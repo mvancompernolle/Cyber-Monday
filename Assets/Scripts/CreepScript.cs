@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CreepScript : MonoBehaviour {
     GameObject player;
+    CharacterController charController;
     Rigidbody2D rbody;
     bool leaping = false;
     bool walking = false;
@@ -19,9 +20,20 @@ public class CreepScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindWithTag("Player");
+        charController = player.GetComponent<CharacterController>();
         rbody = player.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 	}
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            charController.removeItem();
+            leaping = false;
+            currLeapDt = leapCooldown;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

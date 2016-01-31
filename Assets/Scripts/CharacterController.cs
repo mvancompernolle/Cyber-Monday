@@ -57,7 +57,7 @@ public class CharacterController : MonoBehaviour {
         isWalking = (distToMouse >= .15f && vertical > 0.0f) ? true : false;
         animator.SetBool("isKicking", isKicking);
         animator.SetBool("isWalking", isWalking);
-        float translation = speed * Time.deltaTime;
+        float translation = (speed + (isKicking ? 0.5f : 0.0f)) * Time.deltaTime;
 
 
 
@@ -82,6 +82,9 @@ public class CharacterController : MonoBehaviour {
     {
         if(items.Count > 0)
         {
+            items[items.Count - 1].Key.layer = LayerMask.NameToLayer("Interactable");
+            items[items.Count - 1].Key.transform.position += (new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f).normalized * 0.1f);
+            items[items.Count - 1].Key.GetComponent<ItemInterScript>().attached = false;
             items.RemoveAt(items.Count - 1);
         }
         else

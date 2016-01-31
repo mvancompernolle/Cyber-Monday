@@ -12,6 +12,7 @@ public class EnemyInterScript : BaseInteraction
     List<GameObject> items = new List<GameObject>();
     public float itemOffset = 0.11f;
     float cooldown = 0.0f;
+    public int hitsLeft = 10;
 
     public override void Start()
     {
@@ -19,7 +20,7 @@ public class EnemyInterScript : BaseInteraction
         // init items
         for( int i = 0; i < itemNames.Length; ++i)
         {
-            itemPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Item"));
+            itemPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/techno_liver"));
             itemPrefab.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/" + itemNames[i], typeof(Sprite));
             itemPrefab.GetComponent<ItemInterScript>().itemName = itemNames[i];
             itemPrefab.layer = LayerMask.NameToLayer("Default");
@@ -30,23 +31,40 @@ public class EnemyInterScript : BaseInteraction
 
     public override void Interact()
     {
-        if (cooldown > 0.0f) cooldown -= Time.deltaTime;
+
         // drop an item
-        if(items.Count > 0 && cooldown <= 0.0f)
+        if(items.Count > 0)
         {
             items[items.Count - 1].layer = LayerMask.NameToLayer("Interactable");
             items[items.Count - 1].transform.position += (new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f).normalized * 0.1f);
             items.RemoveAt(items.Count - 1);
-            cooldown = 0.1f;
+            cooldown = 0.25f;
+        }
+        else if(items.Count == 0)
+        {
+            hitsLeft--;
+            if(hitsLeft <= 0 && charController.items.Count < 5)
+            {
+                itemPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/techno_liver"));
+                itemPrefab.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/bad_guy", typeof(Sprite));
+                ItemInterScript script = itemPrefab.GetComponent<ItemInterScript>();
+                script.itemName = "bad_guy";
+                itemPrefab.layer = LayerMask.NameToLayer("Default");
+                script.attached = true;
+                script.attachPos = charController.addItem(itemPrefab, "bad_guy");
+                Debug.Log(script.attachPos);
+                Destroy(gameObject);
+            }
         }
     }
 
     public override bool CanInteract()
     {
-        return true;
+        return cooldown <= 0.0f;
     }
 
     void Update() {
+        if (cooldown > 0.0f) cooldown -= Time.deltaTime;
         // spin objects around enemy
         itemRotation += itemRotationSpeed * Time.deltaTime;
         for( int i = 0; i < items.Count; ++i)
