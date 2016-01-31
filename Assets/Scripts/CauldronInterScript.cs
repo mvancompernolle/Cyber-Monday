@@ -75,6 +75,38 @@ public class CauldronInterScript : BaseInteraction
 
             eventName = "Good job you made: A little piece of history";
         }
+        else if (code == (itemCodes["lazer_dragon"] | itemCodes["tasty_bagel"]))
+        {
+            eventName = "Good job you made: Have some burnt breakfast!";
+        }
+        else if (code == (itemCodes["flux_drive"] | itemCodes["combine_helmet"]))
+        {
+            eventName = "Good job you made: Halflife 3 confirmed!";
+        }
+        else if (code == (itemCodes["soykaf_coffee"] | itemCodes["tasty_bagel"] | itemCodes["ancient_smart_phone"]))
+        {
+            eventName = "Good job you made: Wage slave starter kit!";
+        }
+        else if (code == (itemCodes["blue_orange_soda"] | itemCodes["eyes_of_the_interbeast"] | itemCodes["ancient_smart_phone"]))
+        {
+            eventName = "Good job you made: Up all night!";
+        }
+        else if (code == (itemCodes["flux_drive"] | itemCodes["20_Sided_Die"]))
+        {
+            eventName = "Good job you made: Natural 20!";
+        }
+        else if (code == (itemCodes["full_50tb_hdd"] | itemCodes["ancient_smart_phone"] | itemCodes["soykaf_coffee"] | itemCodes["comp_chip"]))
+        {
+            eventName = "Good job you made: 90 day warranty!";
+        }
+        else if (code == (itemCodes["ogre_left_hand"] | itemCodes["fairy_nails"] | itemCodes["frog_leg"]))
+        {
+            eventName = "Good job you made: Mani Pedi!";
+        }
+        else if (code == (itemCodes["ogre_left_hand"] | itemCodes["corp_magazine"]))
+        {
+            eventName = "Good job you made: OCCUPIED!";
+        }
         else
         {
             eventName = "YOU SUCK AT WITCHING - CONTACT GERALT.";
