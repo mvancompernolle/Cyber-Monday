@@ -12,12 +12,22 @@ public class CharacterController : MonoBehaviour {
     public bool isKicking = false;
     public float kickAnimCooldown = 0.25f, currentKickTime;
     bool keyUp = false;
-    public Animator animator;
+    
+    Animator animator;
 
-	// Use this for initialization
-	void Start () {
+    public AudioClip pickupSound;
+    public AudioClip dieSound;
+    public AudioClip kickSound;
+    private AudioSource source;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
+    
+
+    // Use this for initialization
+    void Start () {
         items = new List<KeyValuePair<GameObject, string>>();
         animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
 	}
 
     // Update is called once per frame
@@ -32,6 +42,8 @@ public class CharacterController : MonoBehaviour {
         {
             isKicking = true;
             currentKickTime = kickAnimCooldown;
+            float vol = Random.Range(volLowRange, volHighRange);
+            source.PlayOneShot(kickSound, vol);
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -74,6 +86,16 @@ public class CharacterController : MonoBehaviour {
         if(items.Count < 5)
         {
             items.Add(new KeyValuePair<GameObject, string>(item, name));
+            if (name == "bad_guy")
+            {
+                float vol = Random.Range(volLowRange, volHighRange);
+                source.PlayOneShot(dieSound, vol);
+            }
+            else
+            {
+                float vol = Random.Range(volLowRange, volHighRange);
+                source.PlayOneShot(pickupSound, vol);
+            }
         }
         return pos;
     }

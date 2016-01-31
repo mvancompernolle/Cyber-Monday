@@ -14,6 +14,11 @@ public class EnemyInterScript : BaseInteraction
     float cooldown = 0.0f;
     public int hitsLeft = 10;
 
+    public AudioClip hitSound;
+    private AudioSource source;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
+
     public override void Start()
     {
         base.Start();
@@ -25,6 +30,7 @@ public class EnemyInterScript : BaseInteraction
             itemPrefab.GetComponent<ItemInterScript>().itemName = itemNames[i];
             itemPrefab.layer = LayerMask.NameToLayer("Default");
             items.Add(itemPrefab);
+            source = GetComponent<AudioSource>();
         }
         itemAngleDiff = 360.0f / itemNames.Length;
     }
@@ -35,6 +41,8 @@ public class EnemyInterScript : BaseInteraction
         // drop an item
         if(items.Count > 0)
         {
+            float vol = Random.Range(volLowRange, volHighRange);
+            source.PlayOneShot(hitSound, vol);
             items[items.Count - 1].layer = LayerMask.NameToLayer("Interactable");
             items[items.Count - 1].transform.position += (new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f).normalized * 0.1f);
             items.RemoveAt(items.Count - 1);
@@ -45,6 +53,7 @@ public class EnemyInterScript : BaseInteraction
             hitsLeft--;
             if(hitsLeft <= 0 && charController.items.Count < 5)
             {
+                
                 itemPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/techno_liver"));
                 itemPrefab.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/bad_guy", typeof(Sprite));
                 ItemInterScript script = itemPrefab.GetComponent<ItemInterScript>();
@@ -53,7 +62,14 @@ public class EnemyInterScript : BaseInteraction
                 script.attached = true;
                 script.attachPos = charController.addItem(itemPrefab, "bad_guy");
                 Debug.Log(script.attachPos);
-                Destroy(gameObject);
+                if(script.attachPos == -1)
+                {
+                    Destroy(itemPrefab);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

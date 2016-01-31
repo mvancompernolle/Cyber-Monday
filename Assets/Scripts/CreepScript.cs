@@ -17,13 +17,19 @@ public class CreepScript : MonoBehaviour {
     float walkSpeed = 0.25f;
     Animator animator;
 
-	// Use this for initialization
-	void Start () {
+    public AudioClip kickSound;
+    private AudioSource source;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
+
+    // Use this for initialization
+    void Start () {
         player = GameObject.FindWithTag("Player");
         charController = player.GetComponent<CharacterController>();
         rbody = player.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-	}
+        source = GetComponent<AudioSource>();
+    }
 
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -68,6 +74,11 @@ public class CreepScript : MonoBehaviour {
                     leapDirection = toPlayer.normalized;
                     currLeapDist = leapDistance;
                     Debug.Log(toPlayer);
+                    if (leaping == true)
+                    {
+                        float vol = Random.Range(volLowRange, volHighRange);
+                        source.PlayOneShot(kickSound, vol);
+                    }
                 }
             }
             else
