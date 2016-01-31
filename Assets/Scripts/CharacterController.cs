@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class CharacterController : MonoBehaviour {
     Vector3 direction = new Vector3(1.0f, 0.0f, 0.0f);
     float speed = 1.0f;
-    Rigidbody2D rbody;
     public List<KeyValuePair<GameObject, string>> items;
     public float itemRotation = 0.0f;
     float itemRotationSpeed = 90.0f;
@@ -17,7 +16,6 @@ public class CharacterController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rbody = GetComponent<Rigidbody2D>();
         items = new List<KeyValuePair<GameObject, string>>();
         animator = GetComponent<Animator>();
 	}
@@ -44,13 +42,6 @@ public class CharacterController : MonoBehaviour {
             isKicking = false;
         }
 
-
-        Debug.Log("kicking: " + isKicking);
-        isWalking = (vertical > 0.0f) ? true : false;
-        animator.SetBool("isKicking", isKicking);
-        animator.SetBool("isWalking", isWalking);
-        float translation = speed * Time.deltaTime;
-
         // get mouse position
         Vector2 screenPoint = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector3 mouseDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -63,6 +54,13 @@ public class CharacterController : MonoBehaviour {
 
         float distToMouse = (screenPoint - new Vector2(transform.position.x, transform.position.y)).magnitude;
 
+        isWalking = (distToMouse >= .15f && vertical > 0.0f) ? true : false;
+        animator.SetBool("isKicking", isKicking);
+        animator.SetBool("isWalking", isWalking);
+        float translation = speed * Time.deltaTime;
+
+
+
         transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), angleDiff);
         if (distToMouse >= .15f && vertical > 0.0f )
         {
@@ -72,11 +70,10 @@ public class CharacterController : MonoBehaviour {
 
     public int addItem(GameObject item, string name)
     {
-        int pos = items.Count - 1;
+        int pos = items.Count;
         if(items.Count < 5)
         {
             items.Add(new KeyValuePair<GameObject, string>(item, name));
-            pos++;
         }
         return pos;
     }
