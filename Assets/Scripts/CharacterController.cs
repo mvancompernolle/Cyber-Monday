@@ -6,7 +6,7 @@ public class CharacterController : MonoBehaviour {
     Vector3 direction = new Vector3(1.0f, 0.0f, 0.0f);
     float speed = 1.0f;
     Rigidbody2D rbody;
-    List<GameObject> items;
+    public List<KeyValuePair<GameObject, string>> items;
     public float itemRotation = 0.0f;
     float itemRotationSpeed = 90.0f;
     public bool isWalking = false;
@@ -16,7 +16,7 @@ public class CharacterController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rbody = GetComponent<Rigidbody2D>();
-        items = new List<GameObject>();
+        items = new List<KeyValuePair<GameObject, string>>();
         animator = GetComponent<Animator>();
 	}
 	
@@ -50,12 +50,12 @@ public class CharacterController : MonoBehaviour {
         }
 	}
 
-    public int addItem(GameObject item)
+    public int addItem(GameObject item, string name)
     {
         int pos = items.Count - 1;
         if(items.Count < 5)
         {
-            items.Add(item);
+            items.Add(new KeyValuePair<GameObject, string>(item, name));
             pos++;
         }
         return pos;
@@ -72,4 +72,5 @@ public class CharacterController : MonoBehaviour {
 
         }
     }
+
 }

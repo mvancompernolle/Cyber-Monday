@@ -18,7 +18,7 @@ public class ItemInterScript : BaseInteraction
     public override void Interact()
     {
         // drop an item
-        attachPos = charController.addItem(gameObject);
+        attachPos = charController.addItem(gameObject, name);
         if( attachPos < 5)
         {
             attached = true;
