@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 public class CauldronInterScript : BaseInteraction
 {
     static Dictionary<string, uint> itemCodes = new Dictionary<string, uint>();
@@ -9,27 +11,28 @@ public class CauldronInterScript : BaseInteraction
     override public void Start()
     {
         base.Start();
-        itemCodes["eye_of_the_inter_beast"] = 1 << 0;
-        itemCodes["frog_leg"] = 1 << 1;
-        itemCodes["full_50tb_hdd"] = 1 << 2;
-        itemCodes["lazer_dragon"] = 1 << 3;
-        itemCodes["techno_liver"] = 1 << 4;
-        itemCodes["player_7"] = 1 << 5;
-        itemCodes["combine_helmet"] = 1 << 6;
-        itemCodes["comp_chip"] = 1 << 7;
-        itemCodes["fairy_nails"] = 1 << 8;
-        itemCodes["ogre_left_hand"] = 1 << 9;
-        itemCodes["soykaf_coffee"] = 1 << 10;
-        itemCodes["tasty_bagel"] = 1 << 11;
-        itemCodes["20_Sided_Die"] = 1 << 12;
-        itemCodes["ancient_smart_phone"] = 1 << 13;
-        itemCodes["blue_orange_soda"] = 1 << 14;
-        itemCodes["corp_magazine"] = 1 << 15;
-        itemCodes["flux_drive"] = 1 << 16;
-        itemCodes["haunted_toy_car"] = 1 << 17;
-        itemCodes["screaming_cyber_witches"] = 1 << 18;
-        itemCodes["doom_merc"] = 1 << 19;
+        itemCodes["eyes_of_the_interbeast"]    = 1 << 0;
+        itemCodes["frog_leg"]                   = 1 << 1;
+        itemCodes["full_50tb_hdd"]              = 1 << 2;
+        itemCodes["lazer_dragon"]               = 1 << 3;
+        itemCodes["techno_liver"]               = 1 << 4;
+        itemCodes["doom_merc"]                  = 1 << 5;
+        itemCodes["combine_helmet"]             = 1 << 6;
+        itemCodes["comp_chip"]                  = 1 << 7;
+        itemCodes["fairy_nails"]                = 1 << 8;
+        itemCodes["ogre_left_hand"]             = 1 << 9;
+        itemCodes["soykaf_coffee"]              = 1 << 10;
+        itemCodes["tasty_bagel"]                = 1 << 11;
+        itemCodes["20_Sided_Die"]               = 1 << 12;
+        itemCodes["ancient_smart_phone"]        = 1 << 13;
+        itemCodes["blue_orange_soda"]           = 1 << 14;
+        itemCodes["corp_magazine"]              = 1 << 15;
+        itemCodes["flux_drive"]                 = 1 << 16;
+        itemCodes["haunted_toy_car"]            = 1 << 17;
+        itemCodes["screaming_cyber_witches"]    = 1 << 18;
     }
+    //0, 4, 7, 9
+
 
     public override void Interact()
     {
@@ -44,14 +47,23 @@ public class CauldronInterScript : BaseInteraction
 
         // determine event name
         string eventName = "";
-        if(code == (itemCodes["frog_leg"] | itemCodes["full_50tb_hdd"]))
+        Debug.Log(code);
+        Debug.Log((itemCodes["eyes_of_the_interbeast"] | itemCodes["techno_liver"] | itemCodes["comp_chip"] | itemCodes["ogre_left_hand"]));
+        if (code == (itemCodes["frog_leg"] | itemCodes["tasty_bagel"] | itemCodes["soykaf_coffee"]))
         {
-            eventName = "YOU EARNED THIS WEIRD ACHIEVEMENT";
+            eventName = "Good job you made: A Balanced Breakfast!";
+        }
+        else if (code == (itemCodes["eyes_of_the_interbeast"] | itemCodes["techno_liver"] | itemCodes["comp_chip"] | itemCodes["ogre_left_hand"]))
+        {
+            
+            eventName = "Good job you made: Frankenstein 2216!";
         }
         else
         {
             eventName = "YOU SUCK AT WITCHING - CONTACT GERALT.";
         }
+
+
 
         Achievements.onEvent(new EventInfo(eventName, code));
     }
