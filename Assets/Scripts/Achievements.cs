@@ -5,10 +5,16 @@ public class Achievements : MonoBehaviour {
 
     static float currentTime = 3.0f, duration = 3.0f;
     static string achievementToShow;
+    public GameObject achievments;
+    SpriteRenderer achieventRender;
+    public Transform achievmentPOS;
 
 	// Use this for initialization
 	void Start () {
-	
+        achievmentPOS = achievments.GetComponent<Transform>();
+        achieventRender = achievments.GetComponent<SpriteRenderer>();
+        achieventRender.enabled = false;
+        
 	}
 	
     public static void onEvent(EventInfo info)
@@ -20,7 +26,12 @@ public class Achievements : MonoBehaviour {
     void OnGUI()
     {
         if (currentTime < duration) {
-            GUI.TextArea(new Rect(10, 10, 200, 100), achievementToShow);
+            achieventRender.enabled = true;
+            GUI.TextArea(new Rect(710, 775, 500, 125), achievementToShow);
+        }
+        else
+        {
+            achieventRender.enabled = false;
         }
     }
 

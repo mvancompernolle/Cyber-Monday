@@ -58,6 +58,11 @@ public class CauldronInterScript : BaseInteraction
             
             eventName = "Good job you made: Frankenstein 2216!";
         }
+        else if (code == (itemCodes["ancient_smart_phone"] | itemCodes["flux_drive"] | itemCodes["full_50tb_hdd"]))
+        {
+
+            eventName = "Good job you made: A little piece of history";
+        }
         else
         {
             eventName = "YOU SUCK AT WITCHING - CONTACT GERALT.";

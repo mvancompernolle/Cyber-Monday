@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
     Transform playerTransform;
-    Vector3 offset;
+    public Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
