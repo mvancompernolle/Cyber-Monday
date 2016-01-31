@@ -54,15 +54,6 @@ public class EnemyInterScript : BaseInteraction
             float rads = Mathf.Deg2Rad * (itemRotation + itemAngleDiff * i);
             items[i].transform.position = transform.position + new Vector3(Mathf.Cos(rads), Mathf.Sin(rads), 0.0f) * itemOffset;
         }
-
-        // turn towards player
-        if ((player.transform.position - transform.position).magnitude < 1.0f)
-        {
-            transform.rotation = Quaternion.identity;
-            Vector2 dir = player.transform.position - transform.position;
-            float playerAngle = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x) - 90;
-            transform.Rotate(0.0f, 0.0f, playerAngle);
-        }
     }
 
 }

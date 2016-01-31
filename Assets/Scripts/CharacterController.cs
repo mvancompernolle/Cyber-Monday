@@ -42,14 +42,6 @@ public class CharacterController : MonoBehaviour {
             isKicking = false;
         }
 
-<<<<<<< HEAD
-        isWalking = (vertical > 0.0f) ? true : false;
-        animator.SetBool("isKicking", isKicking);
-        animator.SetBool("isWalking", isWalking);
-        float translation = speed * Time.deltaTime;
-
-=======
->>>>>>> origin/master
         // get mouse position
         Vector2 screenPoint = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector3 mouseDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
