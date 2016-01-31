@@ -37,7 +37,7 @@ public class InteractionController : MonoBehaviour {
                 // draw indicator saying you can interact
                 selectorRenderer.enabled = true;
                 selector.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y, hit.collider.transform.position.z);
-                float selectorRad = hit.collider.bounds.size.x * 3.0f;
+                float selectorRad = hit.collider.bounds.size.x * 3.8f;
                 selector.transform.localScale = new Vector3(selectorRad, selectorRad, selectorRad);
 
                 if (Input.GetKey(KeyCode.Space))

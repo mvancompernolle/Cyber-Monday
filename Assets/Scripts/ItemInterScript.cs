@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ItemInterScript : BaseInteraction
 {
-    public string name;
+    public string itemName;
     bool attached = false;
     int attachPos;
     public float itemOffset = 0.11f;
@@ -11,7 +11,7 @@ public class ItemInterScript : BaseInteraction
     override public void Start()
     {
         base.Start();
-        gameObject.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/" + name, typeof(Sprite));
+        gameObject.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/" + itemName, typeof(Sprite));
         attachPos = -1;
     }
 

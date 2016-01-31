@@ -44,8 +44,6 @@ public class CharacterController : MonoBehaviour {
             isKicking = false;
         }
 
-
-        Debug.Log("kicking: " + isKicking);
         isWalking = (vertical > 0.0f) ? true : false;
         animator.SetBool("isKicking", isKicking);
         animator.SetBool("isWalking", isWalking);
