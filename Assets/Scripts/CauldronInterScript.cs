@@ -6,7 +6,7 @@ public class CauldronInterScript : BaseInteraction
 {
     static Dictionary<string, uint> itemCodes = new Dictionary<string, uint>();
 
-    public void Start()
+    override public void Start()
     {
         base.Start();
         itemCodes["eye_of_the_inter_beast"] = 1 << 0;
@@ -63,6 +63,10 @@ public class CauldronInterScript : BaseInteraction
 
     public uint getItemCode(string item)
     {
-        return itemCodes[item];
+        if (itemCodes.ContainsKey(item))
+        {
+            return itemCodes[item];
+        }
+        return 0;
     }
 }

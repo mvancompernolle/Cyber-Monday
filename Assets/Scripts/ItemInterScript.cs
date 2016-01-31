@@ -18,8 +18,8 @@ public class ItemInterScript : BaseInteraction
     public override void Interact()
     {
         // drop an item
-        attachPos = charController.addItem(gameObject, name);
-        if( attachPos < 5)
+        attachPos = charController.addItem(gameObject, itemName);
+        if ( attachPos < 5)
         {
             attached = true;
             gameObject.layer = LayerMask.NameToLayer("Default");
