@@ -41,6 +41,10 @@ public class CauldronInterScript : BaseInteraction
         {
             Debug.Log(charController.items[i].Value);
             code |= getItemCode(charController.items[i].Value);
+            if(charController.items[i].Value == "bad_guy")
+            {
+                EnemyInterScript.numEnemies--;
+            }
             Destroy(charController.items[i].Key);
         }
         charController.items.Clear();

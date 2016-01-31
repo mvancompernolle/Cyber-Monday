@@ -27,7 +27,7 @@ public class CreepScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collider)
     {
-        if(collider.gameObject.tag == "Player")
+        if(collider.gameObject.tag == "Player" && leaping)
         {
             charController.removeItem();
             leaping = false;
@@ -67,7 +67,6 @@ public class CreepScript : MonoBehaviour {
                     walking = false;
                     leapDirection = toPlayer.normalized;
                     currLeapDist = leapDistance;
-                    Debug.Log(toPlayer);
                 }
             }
             else

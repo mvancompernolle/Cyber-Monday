@@ -13,6 +13,7 @@ public class EnemyInterScript : BaseInteraction
     public float itemOffset = 0.11f;
     float cooldown = 0.0f;
     public int hitsLeft = 10;
+    public static int numEnemies = 0;
 
     public override void Start()
     {
@@ -27,6 +28,7 @@ public class EnemyInterScript : BaseInteraction
             items.Add(itemPrefab);
         }
         itemAngleDiff = 360.0f / itemNames.Length;
+        numEnemies++;
     }
 
     public override void Interact()
@@ -52,8 +54,14 @@ public class EnemyInterScript : BaseInteraction
                 itemPrefab.layer = LayerMask.NameToLayer("Default");
                 script.attached = true;
                 script.attachPos = charController.addItem(itemPrefab, "bad_guy");
-                Debug.Log(script.attachPos);
-                Destroy(gameObject);
+                if (script.attachPos == -1)
+                {
+                    Destroy(itemPrefab);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

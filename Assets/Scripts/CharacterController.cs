@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour {
     public float kickAnimCooldown = 0.25f, currentKickTime;
     bool keyUp = false;
     public Animator animator;
+    public bool gameOver = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,8 +21,48 @@ public class CharacterController : MonoBehaviour {
         animator = GetComponent<Animator>();
 	}
 
+    void OnGUI()
+    {
+        if (gameOver) {
+            string gameOverText = "";
+            int textSize = Screen.width / 40;
+            textSize = textSize < 12 ? 12 : textSize;
+            Texture2D texture = new Texture2D(1, 1);
+            texture.SetPixel(0, 0, new Color(0.0f, 0.0f, 0.0f, 0.5f));
+            texture.Apply();
+            GUI.skin.box.normal.background = texture;
+            if (EnemyInterScript.numEnemies != 0)
+            {
+                gameOverText = "<size=" + textSize + ">Those sneaky cyber people kicked your butt..\n Monday could not get any worse than this.\n"
+                    + "Initiating time relapse...\n Press Enter to restart or press Escape to exit.</size>";
+            }
+            else
+            {
+                gameOverText = "<size=" + textSize + ">Ritual!!! You win!!!\n"
+                    + "Initiating time relapse...\n Press Enter to restart or press Escape to exit.</size>";
+            }
+            GUI.Box(new Rect(Screen.width * 0.25f, Screen.height * 0.25f, Screen.width * 0.5f, Screen.height * 0.5f), GUIContent.none);
+            GUI.Label(new Rect(Screen.width * 0.25f, Screen.height * 0.25f, Screen.width * 0.5f, Screen.height * 0.5f), gameOverText);
+        }
+
+    }
+
     // Update is called once per frame
     void Update() {
+        if (EnemyInterScript.numEnemies == 0) gameOver = true;
+        if (gameOver)
+        {
+            if (Input.GetKey(KeyCode.Return))
+            {
+                Application.LoadLevel(0);
+            }
+            else if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+            return;
+        }
+
         if (currentKickTime >= 0.0f) { currentKickTime -= Time.deltaTime; }
         itemRotation += itemRotationSpeed * Time.deltaTime;
 
@@ -70,12 +111,16 @@ public class CharacterController : MonoBehaviour {
 
     public int addItem(GameObject item, string name)
     {
-        int pos = items.Count;
+        Debug.Log(items.Count);
         if(items.Count < 5)
         {
             items.Add(new KeyValuePair<GameObject, string>(item, name));
+            return items.Count - 1;
         }
-        return pos;
+        else
+        {
+            return -1;
+        }
     }
 
     public void removeItem()
@@ -89,7 +134,8 @@ public class CharacterController : MonoBehaviour {
         }
         else
         {
-
+            // show game over message and restart the game
+            gameOver = true;
         }
     }
 

@@ -7,7 +7,7 @@ public class AchivementNotify : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
+        playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         offset = transform.position - playerTransform.position;
 	}
 	

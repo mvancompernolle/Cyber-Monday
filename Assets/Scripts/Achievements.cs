@@ -8,6 +8,7 @@ public class Achievements : MonoBehaviour {
     public GameObject achievments;
     SpriteRenderer achieventRender;
     public Transform achievmentPOS;
+    Vector2 dims;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +28,10 @@ public class Achievements : MonoBehaviour {
     {
         if (currentTime < duration) {
             achieventRender.enabled = true;
-            GUI.TextArea(new Rect(710, 775, 500, 125), achievementToShow);
+            Vector3 origin = Camera.main.WorldToScreenPoint(new Vector3(achieventRender.bounds.min.x, achieventRender.bounds.max.y, 0.0f));
+            Vector3 extent = Camera.main.WorldToScreenPoint(new Vector3(achieventRender.bounds.max.x, achieventRender.bounds.min.y, 0.0f));
+            Vector2 dims = new Vector2(extent.x - origin.x, origin.y - extent.y);
+            GUI.TextArea(new Rect(origin.x + dims.x * 0.2f, Screen.height - (origin.y - dims.y * 0.15f), dims.x * 0.7f, dims.y * 0.7f), achievementToShow);
         }
         else
         {

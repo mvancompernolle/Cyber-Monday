@@ -12,14 +12,13 @@ public class ItemInterScript : BaseInteraction
     {
         base.Start();
         gameObject.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Items/" + itemName, typeof(Sprite));
-        attachPos = -1;
     }
 
     public override void Interact()
     {
         // drop an item
         attachPos = charController.addItem(gameObject, itemName);
-        if ( attachPos < 5)
+        if ( attachPos != -1 )
         {
             attached = true;
             gameObject.layer = LayerMask.NameToLayer("Default");
@@ -28,7 +27,7 @@ public class ItemInterScript : BaseInteraction
 
     public override bool CanInteract()
     {
-        return true;
+        return player.GetComponent<CharacterController>().items.Count < 5;
     }
 
     void Update()
