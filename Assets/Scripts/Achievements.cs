@@ -21,7 +21,6 @@ public class Achievements : MonoBehaviour {
     {
         if (currentTime < duration) {
             GUI.TextArea(new Rect(10, 10, 200, 100), achievementToShow);
-            Debug.Log("achievement");
         }
     }
 

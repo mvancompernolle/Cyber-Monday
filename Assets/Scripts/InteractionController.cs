@@ -40,17 +40,10 @@ public class InteractionController : MonoBehaviour {
                 float selectorRad = hit.collider.bounds.size.x * 3.0f;
                 selector.transform.localScale = new Vector3(selectorRad, selectorRad, selectorRad);
 
-                if (!charController.isKicking && Input.GetKey(KeyCode.Space))
+                if (Input.GetKey(KeyCode.Space))
                 {
-                    charController.isKicking = true;
-                    //charController.isWalking = false;
                     interactionComp.Interact();
                 }
-                else
-                {
-                    charController.isKicking = false;
-                }
-                charController.animator.SetBool("isKicking", charController.isKicking);
             }
             else
             {

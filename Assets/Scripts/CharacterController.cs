@@ -11,6 +11,8 @@ public class CharacterController : MonoBehaviour {
     float itemRotationSpeed = 90.0f;
     public bool isWalking = false;
     public bool isKicking = false;
+    public float kickAnimCooldown = 0.25f, currentKickTime;
+    bool keyUp = false;
     public Animator animator;
 
 	// Use this for initialization
@@ -19,14 +21,33 @@ public class CharacterController : MonoBehaviour {
         items = new List<KeyValuePair<GameObject, string>>();
         animator = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
+        if (currentKickTime >= 0.0f) { currentKickTime -= Time.deltaTime; }
         itemRotation += itemRotationSpeed * Time.deltaTime;
 
-        float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        isWalking = (horizontal > 0.0f || vertical > 0.0f) ? true : false;
+
+        // set kicking
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            isKicking = true;
+            currentKickTime = kickAnimCooldown;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            currentKickTime = 0.0f;
+        }
+        if(currentKickTime <= 0.0f)
+        {
+            isKicking = false;
+        }
+
+
+        Debug.Log("kicking: " + isKicking);
+        isWalking = (vertical > 0.0f) ? true : false;
+        animator.SetBool("isKicking", isKicking);
         animator.SetBool("isWalking", isWalking);
         float translation = speed * Time.deltaTime;
 
@@ -43,8 +64,7 @@ public class CharacterController : MonoBehaviour {
         float distToMouse = (screenPoint - new Vector2(transform.position.x, transform.position.y)).magnitude;
 
         transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f), angleDiff);
-        transform.Translate(direction * horizontal * translation);
-        if (distToMouse >= .15f || vertical <= 0.0f )
+        if (distToMouse >= .15f && vertical > 0.0f )
         {
             transform.Translate(new Vector3(-direction.y, direction.x) * vertical * translation);
         }
