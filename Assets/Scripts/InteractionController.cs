@@ -23,12 +23,10 @@ public class InteractionController : MonoBehaviour {
         Vector3 mouseDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         mouseDir.z = 0;
         mouseDir.Normalize();
-        Debug.Log(mouseDir);
         Debug.DrawRay(rbody.transform.position + (mouseDir * radius), mouseDir * distToInteraction, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(rbody.transform.position + (mouseDir * radius), mouseDir, distToInteraction);
-        Debug.Log(hit ? "HIT!" : "nope!");
+        RaycastHit2D hit = Physics2D.Raycast(rbody.transform.position + (mouseDir * radius), mouseDir, distToInteraction, 1 << LayerMask.NameToLayer("Interactable"));
 
-        if (hit && hit.collider.tag != "Environment")
+        if (hit)
         {
             InteractionScript script = hit.collider.gameObject.GetComponent<InteractionScript>();
             BaseInteraction interactionComp = ((BaseInteraction)hit.transform.gameObject.GetComponent(script.scriptName));
