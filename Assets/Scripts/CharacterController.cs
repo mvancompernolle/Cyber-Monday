@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour {
     private AudioSource source;
     private float volLowRange = .5f;
     private float volHighRange = 1.0f;
+    public bool alive = true;
     
 
     // Use this for initialization
@@ -58,9 +59,17 @@ public class CharacterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (EnemyInterScript.numEnemies == 0) gameOver = true;
-        if (gameOver)
+        animator.SetBool("isKicking", isKicking);
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("alive", alive);
+
+        if (EnemyInterScript.numEnemies == 0)
         {
+            gameOver = true;
+            
+        }
+        if (gameOver)
+        {   
             if (Input.GetKey(KeyCode.Return))
             {
                 Application.LoadLevel(0);
@@ -107,8 +116,6 @@ public class CharacterController : MonoBehaviour {
         float distToMouse = (screenPoint - new Vector2(transform.position.x, transform.position.y)).magnitude;
 
         isWalking = (distToMouse >= .15f && vertical > 0.0f) ? true : false;
-        animator.SetBool("isKicking", isKicking);
-        animator.SetBool("isWalking", isWalking);
         float translation = (speed + (isKicking ? 0.5f : 0.0f)) * Time.deltaTime;
 
 
@@ -157,6 +164,7 @@ public class CharacterController : MonoBehaviour {
         {
             // show game over message and restart the game
             gameOver = true;
+            alive = false;
         }
     }
 
